@@ -5,3 +5,9 @@ enum Serverity {
     Debug,
     Error,
 };
+
+const char * ServerityStr[] = {
+    "INFO ",
+    "DEBUG",
+    "ERROR",
+};
