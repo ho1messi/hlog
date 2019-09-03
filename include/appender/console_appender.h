@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+namespace hlog {
+
 class ConsoleAppender : public AppenderI {
 public:
     ConsoleAppender(FormatterI * formatter) :
@@ -22,3 +24,5 @@ public:
 private:
     FormatterI * m_formatter;
 };
+
+}

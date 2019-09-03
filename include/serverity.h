@@ -1,5 +1,7 @@
 #pragma once
 
+namespace hlog {
+
 enum Serverity {
     Info,
     Debug,
@@ -11,3 +13,5 @@ const char * ServerityStr[] = {
     "DEBUG",
     "ERROR",
 };
+
+}

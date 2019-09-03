@@ -12,6 +12,8 @@
 
 #include "logstream.h"
 
+namespace hlog {
+
 class Logger {
 public:
     Logger(AppenderI * appender) {
@@ -77,4 +79,6 @@ inline Logger * addFile(std::string fileName) {
     LineFormatter * lineFormatter = new LineFormatter();
     Logger::getInstance()->addAppender(new FileAppender(fileName, lineFormatter));
     return Logger::getInstance();
+}
+
 }

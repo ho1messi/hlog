@@ -2,6 +2,8 @@
 
 #include "logstream.h"
 
+namespace hlog {
+
 class AppenderI {
 public:
     virtual ~AppenderI() {
@@ -9,3 +11,5 @@ public:
 
     virtual void log(LogStream & logStream) = 0;
 };
+
+}

@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 
+namespace hlog {
+
 class FileAppender : public AppenderI {
 public:
     FileAppender(const std::string & fileName, FormatterI * formatter) :
@@ -26,3 +28,5 @@ private:
     FormatterI * m_formatter;
     std::fstream m_fileStream;
 };
+
+}

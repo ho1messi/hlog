@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <sys/time.h>
 
+namespace hlog {
+
 class LineFormatter : public FormatterI {
 public:
     LineFormatter() {
@@ -30,15 +32,17 @@ public:
         gettimeofday(&tv, NULL);
 
         ss << time->tm_year + 1990 << '-';
-        ss << std::setw(2) << std::setfill('0') << time->tm_mon;
-        ss << '-' << std::setw(2) << std::setfill('0') << time->tm_mday;
-        ss << ' ' << std::setw(2) << std::setfill('0') << time->tm_hour << ':'
-            << time->tm_min << ':' << time->tm_sec << '.' << tv.tv_usec;
+        ss << std::setw(2) << std::setfill('0') << time->tm_mon << '-';
+        ss << std::setw(2) << std::setfill('0') << time->tm_mday << ' ';
+        ss << std::setw(2) << std::setfill('0') << time->tm_hour << ':';
+        ss << std::setw(2) << std::setfill('0') << time->tm_min << ':';
+        ss << std::setw(2) << std::setfill('0') << time->tm_sec << '.';
+        ss << std::setw(2) << std::setfill('0') << tv.tv_usec << ' ';
 
-        ss << ' ' << ServerityStr[logStream.getServerity()];
-        ss << " [" << logStream.getTid() << ']';
-        ss << " [" << logStream.getFunc() << '@' << logStream.getLine() << ']';
-        ss << ' ' << logStream.getMessage();
+        ss << ServerityStr[logStream.getServerity()] << ' ';
+        ss << '[' << logStream.getTid() << ']' << ' ';
+        ss << '[' << logStream.getFunc() << '@' << logStream.getLine() << ']' << ' ';
+        ss << logStream.getMessage();
 
         m_formatStr = ss.str();
         return m_formatStr.c_str();
@@ -48,3 +52,5 @@ private:
     std::string m_formatStr;
 
 };
+
+}

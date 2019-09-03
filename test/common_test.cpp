@@ -1,8 +1,9 @@
 #include "../include/hlog.h"
 
 int main(int argc, char ** argv) {
-    init();
-    addFile("output.txt");
+
+    hlog::init();
+    hlog::addFile("output.txt");
 
     HLOGI << "Hello world!";
     HLOGD << "Hello world!";

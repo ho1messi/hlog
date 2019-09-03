@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
+namespace hlog {
 
 inline unsigned int getTid()
 {
@@ -24,4 +25,4 @@ inline unsigned int getTid()
 #endif
 }
 
-
+}

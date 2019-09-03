@@ -6,6 +6,8 @@
 
 #include <sstream>
 
+namespace hlog {
+
 class LogStream {
 public:
     LogStream(Serverity serverity, const char * func, size_t line) :
@@ -52,3 +54,5 @@ private:
     unsigned int m_tid;
     Serverity m_serverity;
 };
+
+}

@@ -4,6 +4,8 @@
 
 #include <string>
 
+namespace hlog {
+
 class FormatterI {
 public:
     virtual ~FormatterI() {
@@ -13,3 +15,5 @@ public:
     virtual const char * format(LogStream & logStream) = 0;
 
 };
+
+}
