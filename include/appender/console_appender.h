@@ -1,14 +1,15 @@
 #pragma once
 
 #include "../appenderI.h"
+#include "../formatterI.h"
 #include "../formatter/line_formatter.h"
 
 #include <iostream>
 
 class ConsoleAppender : public AppenderI {
 public:
-    ConsoleAppender() {
-        m_formatter = new LineFormatter();
+    ConsoleAppender(FormatterI * formatter) :
+    m_formatter(formatter) {
     }
 
     virtual ~ConsoleAppender() {

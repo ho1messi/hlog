@@ -4,6 +4,7 @@
 
 #include "appender/console_appender.h"
 #include "appender/file_appender.h"
+#include "formatter/line_formatter.h"
 
 #include <string>
 #include <list>
@@ -55,11 +56,25 @@ private:
 Logger * Logger::m_instance = nullptr;
 
 inline Logger * init() {
-    Logger * logger = new Logger(new ConsoleAppender());
+    LineFormatter * lineFormatter = new LineFormatter();
+    Logger * logger = new Logger(new ConsoleAppender(lineFormatter));
     return logger;
 }
 
 inline Logger * init(std::string fileName) {
-    Logger * logger = new Logger(new FileAppender(fileName));
+    LineFormatter * lineFormatter = new LineFormatter();
+    Logger * logger = new Logger(new FileAppender(fileName, lineFormatter));
     return logger;
+}
+
+inline Logger * addConsole() {
+    LineFormatter * lineFormatter = new LineFormatter();
+    Logger::getInstance()->addAppender(new ConsoleAppender(lineFormatter));
+    return Logger::getInstance();
+}
+
+inline Logger * addFile(std::string fileName) {
+    LineFormatter * lineFormatter = new LineFormatter();
+    Logger::getInstance()->addAppender(new FileAppender(fileName, lineFormatter));
+    return Logger::getInstance();
 }
