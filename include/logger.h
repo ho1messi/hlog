@@ -5,6 +5,7 @@
 #include "appender/console_appender.h"
 #include "appender/file_appender.h"
 #include "formatter/line_formatter.h"
+#include "formatter/table_formatter.h"
 
 #include <string>
 #include <list>
@@ -16,18 +17,11 @@ namespace hlog {
 
 class Logger {
 public:
-    Logger(AppenderI * appender) {
-        assert(!m_instance);
-
+    Logger * addAppender(AppenderI * appender) {
         if (appender)
             m_appenders.push_back(appender);
 
-        m_instance = this;
-    }
-
-    void addAppender(AppenderI * appender) {
-        if (appender)
-            m_appenders.push_back(appender);
+        return this;
     }
 
     void operator += (LogStream & logStream) {
@@ -38,10 +32,16 @@ public:
     }
     
     static Logger * getInstance() {
+        if (!m_instance)
+            m_instance = new Logger();
+
         return m_instance;
     }
 
 protected:
+    Logger() {
+    }
+
     Logger(Logger & logger) {
     }
 
@@ -57,28 +57,34 @@ private:
 
 Logger * Logger::m_instance = nullptr;
 
-inline Logger * init() {
-    LineFormatter * lineFormatter = new LineFormatter();
-    Logger * logger = new Logger(new ConsoleAppender(lineFormatter));
-    return logger;
-}
-
-inline Logger * init(std::string fileName) {
-    LineFormatter * lineFormatter = new LineFormatter();
-    Logger * logger = new Logger(new FileAppender(fileName, lineFormatter));
-    return logger;
+inline bool isCsv(const std::string & fileName) {
+    static std::string csvStr("csv");
+    std::string::size_type dotPos = fileName.rfind('.');
+    if (dotPos != std::string::npos)
+        return !csvStr.compare(0, 3, fileName, dotPos + 1, 3);
+    return false;
 }
 
 inline Logger * addConsole() {
     LineFormatter * lineFormatter = new LineFormatter();
-    Logger::getInstance()->addAppender(new ConsoleAppender(lineFormatter));
-    return Logger::getInstance();
+    return Logger::getInstance()->addAppender(new ConsoleAppender(lineFormatter));
 }
 
-inline Logger * addFile(std::string fileName) {
-    LineFormatter * lineFormatter = new LineFormatter();
-    Logger::getInstance()->addAppender(new FileAppender(fileName, lineFormatter));
-    return Logger::getInstance();
+inline Logger * addFile(const std::string & fileName) {
+    FormatterI * formatter = nullptr;
+    if (isCsv(fileName))
+        formatter = new TableFormatter();
+    else
+        formatter = new LineFormatter();
+    return Logger::getInstance()->addAppender(new FileAppender(fileName, formatter));
+}
+
+inline Logger * init() {
+    return addConsole();
+}
+
+inline Logger * init(const std::string & fileName) {
+    return addFile(fileName);
 }
 
 }

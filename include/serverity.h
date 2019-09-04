@@ -9,7 +9,7 @@ enum Serverity {
 };
 
 const char * ServerityStr[] = {
-    "INFO ",
+    "INFO",
     "DEBUG",
     "ERROR",
 };

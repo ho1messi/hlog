@@ -49,10 +49,10 @@ private:
     std::stringstream m_message;
     std::string m_messageStr;
 
+    Serverity m_serverity;
     const char * m_func;
     size_t m_line;
     unsigned int m_tid;
-    Serverity m_serverity;
 };
 
 }

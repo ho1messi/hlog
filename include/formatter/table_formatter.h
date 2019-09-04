@@ -12,13 +12,13 @@
 
 namespace hlog {
 
-class LineFormatter : public FormatterI {
+class TableFormatter : public FormatterI {
 public:
-    LineFormatter() {
+    TableFormatter() {
 
     }
 
-    ~LineFormatter() {
+    ~TableFormatter() {
 
     }
 
@@ -31,17 +31,17 @@ public:
         timeval tv;
         gettimeofday(&tv, NULL);
 
-        ss << time->tm_year + 1990 << '-';
-        ss << std::setw(2) << std::setfill('0') << time->tm_mon + 1 << '-';
-        ss << std::setw(2) << std::setfill('0') << time->tm_mday << ' ';
+        ss << time->tm_year + 1990 << '/';
+        ss << std::setw(2) << std::setfill('0') << time->tm_mon << '/';
+        ss << std::setw(2) << std::setfill('0') << time->tm_mday << ';';
         ss << std::setw(2) << std::setfill('0') << time->tm_hour << ':';
         ss << std::setw(2) << std::setfill('0') << time->tm_min << ':';
         ss << std::setw(2) << std::setfill('0') << time->tm_sec << '.';
-        ss << std::setw(3) << std::setfill('0') << tv.tv_usec / 1000 << ' ';
+        ss << std::setw(3) << std::setfill('0') << tv.tv_usec / 1000 << ';';
 
-        ss << std::setw(5) << std::setfill(' ') << ServerityStr[logStream.getServerity()] << ' ';
-        ss << '[' << logStream.getTid() << ']' << ' ';
-        ss << '[' << logStream.getFunc() << '@' << logStream.getLine() << ']' << ' ';
+        ss << ServerityStr[logStream.getServerity()] << ';';
+        ss << logStream.getTid() << ';';
+        ss << logStream.getFunc() << '@' << logStream.getLine() << ';';
         ss << logStream.getMessage();
 
         m_formatStr = ss.str();
