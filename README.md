@@ -1,6 +1,8 @@
 # hlog
 
-simple, headers only logging library 
+simple, header-only C++ logging library 
+
+## WARNING: hlog only support linux yet.
 
 ## Install
 
@@ -12,13 +14,23 @@ add `include/` folder to your project
 #include "hlog.h"
 
 int main(int argc, char ** argv) {
-    hlog::init();
+    // init with console output
+    // every time call init() hlog will add an console appender
+    // which means output one more time
+    // if only want to log to files
+    // can use hlog::init("output.txt")
+    hlog::init(); 
+
+    // add an file appender to also log to file
+    // if want to output on console once more
+    // can use hlog::addConsole()
     hlog::addFile("output.txt");
+    // .csv file will use another format
     hlog::addFile("output.csv");
     
-    HLOGI << "Hello world!";
-    HLOGD << "Hello world!";
-    HLOGE << "Hello world!";
+    HLOGI << "Hello world!"; // Info
+    HLOGD << "Hello world!"; // Debug
+    HLOGE << "Hello world!"; // Error
 
     return 0;
 }
