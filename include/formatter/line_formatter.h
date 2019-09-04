@@ -31,7 +31,7 @@ public:
         timeval tv;
         gettimeofday(&tv, NULL);
 
-        ss << time->tm_year + 1990 << '-';
+        ss << time->tm_year + 1900 << '-';
         ss << std::setw(2) << std::setfill('0') << time->tm_mon + 1 << '-';
         ss << std::setw(2) << std::setfill('0') << time->tm_mday << ' ';
         ss << std::setw(2) << std::setfill('0') << time->tm_hour << ':';
