@@ -40,7 +40,7 @@ public:
     }
 
     template <class T>
-    LogStream & operator<< (T & data) {
+    LogStream & operator<< (const T & data) {
         m_message << data;
         return *this;
     }
